@@ -10,6 +10,7 @@ export default function DesignerMan() {
                         <th>Ultima vez Online</th>
                         <th>Estatuto</th>
                         <th>Estado</th>
+                        <th>Email</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -19,6 +20,7 @@ export default function DesignerMan() {
                         <td>04/10/2013</td>                        
                         <td>Administrador</td>
                         <td><span className="status text-success">•</span> Ativo</td>
+                        <td>Carlosmoreira4568@hotmail.com</td>
                         <td>
                             <a href="#" className="settings mr-2" title="" data-toggle="tooltip" data-original-title="settings mr-2"><i className="fas fa-cog text-danger"></i></a>
                             <a href="#" className="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i className="fas fa-times-circle text-primary"></i></a>
@@ -29,6 +31,7 @@ export default function DesignerMan() {
                         <td>05/08/2014</td>                       
                         <td>Publicador</td>
                         <td><span className="status text-success">•</span> Ativo</td>
+                        <td>Carlosmoreira4568@hotmail.com</td>
                         <td>
                             <a href="#" className="settings mr-2" title="" data-toggle="tooltip" data-original-title="settings mr-2"><i className="fas fa-cog text-danger"></i></a>
                             <a href="#" className="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i className="fas fa-times-circle text-primary"></i></a>
@@ -38,7 +41,8 @@ export default function DesignerMan() {
                         <td><a href="#"><img src="/avatar/3.jpg" className="avatar" alt="Avatar"/> Antonio Moreno</a></td>
                         <td>11/05/2015</td>
                         <td>Publicador</td>
-                        <td><span className="status text-danger">•</span> Suspenso</td>                        
+                        <td><span className="status text-danger">•</span> Suspenso</td>       
+                        <td>Carlosmoreira4568@hotmail.com</td>            
                         <td>
                             <a href="#" className="settings mr-2" title="" data-toggle="tooltip" data-original-title="settings mr-2"><i className="fas fa-cog text-danger"></i></a>
                             <a href="#" className="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i className="fas fa-times-circle text-primary"></i></a>
@@ -49,6 +53,7 @@ export default function DesignerMan() {
                         <td>06/09/2016</td>
                         <td>Revisor</td>
                         <td><span className="status text-success">•</span> Ativo</td>
+                        <td>Carlosmoreira4568@hotmail.com</td>
                         <td>
                             <a href="#" className="settings mr-2" title="" data-toggle="tooltip" data-original-title="settings mr-2"><i className="fas fa-cog text-danger"></i></a>
                             <a href="#" className="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i className="fas fa-times-circle text-primary"></i></a>
@@ -59,6 +64,7 @@ export default function DesignerMan() {
                         <td>12/08/2017</td>                        
                         <td>Moderator</td>
                         <td><span className="status text-warning">•</span> Inativo</td>
+                        <td>Carlosmoreira4568@hotmail.com</td>
                         <td>
                             <a href="#" className="settings mr-2" title="" data-toggle="tooltip" data-original-title="settings mr-2"><i className="fas fa-cog text-danger"></i></a>
                             <a href="#" className="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i className="fas fa-times-circle text-primary"></i></a>
@@ -69,6 +75,7 @@ export default function DesignerMan() {
                         <td>04/10/2013</td>                        
                         <td>Administrador</td>
                         <td><span className="status text-success">•</span> Ativo</td>
+                        <td>Carlosmoreira4568@hotmail.com</td>
                         <td>
                             <a href="#" className="settings mr-2" title="" data-toggle="tooltip" data-original-title="settings mr-2"><i className="fas fa-cog text-danger"></i></a>
                             <a href="#" className="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i className="fas fa-times-circle text-primary"></i></a>
@@ -79,6 +86,7 @@ export default function DesignerMan() {
                         <td>05/08/2014</td>                       
                         <td>Publicador</td>
                         <td><span className="status text-success">•</span> Ativo</td>
+                        <td>Carlosmoreira4568@hotmail.com</td>
                         <td>
                             <a href="#" className="settings mr-2" title="" data-toggle="tooltip" data-original-title="settings mr-2"><i className="fas fa-cog text-danger"></i></a>
                             <a href="#" className="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i className="fas fa-times-circle text-primary"></i></a>
@@ -88,7 +96,8 @@ export default function DesignerMan() {
                         <td><a href="#"><img src="/avatar/3.jpg" className="avatar" alt="Avatar"/> Antonio Moreno</a></td>
                         <td>11/05/2015</td>
                         <td>Publicador</td>
-                        <td><span className="status text-danger">•</span> Suspenso</td>                        
+                        <td><span className="status text-danger">•</span> Suspenso</td>  
+                        <td>Carlosmoreira4568@hotmail.com</td>                    
                         <td>
                             <a href="#" className="settings mr-2" title="" data-toggle="tooltip" data-original-title="settings mr-2"><i className="fas fa-cog text-danger"></i></a>
                             <a href="#" className="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i className="fas fa-times-circle text-primary"></i></a>
@@ -99,6 +108,7 @@ export default function DesignerMan() {
                         <td>06/09/2016</td>
                         <td>Revisor</td>
                         <td><span className="status text-success">•</span> Ativo</td>
+                        <td>Carlosmoreira4568@hotmail.com</td>
                         <td>
                             <a href="#" className="settings mr-2" title="" data-toggle="tooltip" data-original-title="settings mr-2"><i className="fas fa-cog text-danger"></i></a>
                             <a href="#" className="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i className="fas fa-times-circle text-primary"></i></a>
@@ -109,6 +119,69 @@ export default function DesignerMan() {
                         <td>12/08/2017</td>                        
                         <td>Moderator</td>
                         <td><span className="status text-warning">•</span> Inativo</td>
+                        <td>Carlosmoreira4568@hotmail.com</td>
+                        <td>
+                            <a href="#" className="settings mr-2" title="" data-toggle="tooltip" data-original-title="settings mr-2"><i className="fas fa-cog text-danger"></i></a>
+                            <a href="#" className="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i className="fas fa-times-circle text-primary"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a href="#"><img src="/avatar/5.jpg" className="avatar" alt="Avatar"/> Martin Sommer</a></td>
+                        <td>12/08/2017</td>                        
+                        <td>Moderator</td>
+                        <td><span className="status text-warning">•</span> Inativo</td>
+                        <td>Carlosmoreira4568@hotmail.com</td>
+                        <td>
+                            <a href="#" className="settings mr-2" title="" data-toggle="tooltip" data-original-title="settings mr-2"><i className="fas fa-cog text-danger"></i></a>
+                            <a href="#" className="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i className="fas fa-times-circle text-primary"></i></a>
+                        </td>
+                    </tr>                    <tr>
+                        <td><a href="#"><img src="/avatar/5.jpg" className="avatar" alt="Avatar"/> Martin Sommer</a></td>
+                        <td>12/08/2017</td>                        
+                        <td>Moderator</td>
+                        <td><span className="status text-warning">•</span> Inativo</td>
+                        <td>Carlosmoreira4568@hotmail.com</td>
+                        <td>
+                            <a href="#" className="settings mr-2" title="" data-toggle="tooltip" data-original-title="settings mr-2"><i className="fas fa-cog text-danger"></i></a>
+                            <a href="#" className="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i className="fas fa-times-circle text-primary"></i></a>
+                        </td>
+                    </tr>                    <tr>
+                        <td><a href="#"><img src="/avatar/5.jpg" className="avatar" alt="Avatar"/> Martin Sommer</a></td>
+                        <td>12/08/2017</td>                        
+                        <td>Moderator</td>
+                        <td><span className="status text-warning">•</span> Inativo</td>
+                        <td>Carlosmoreira4568@hotmail.com</td>
+                        <td>
+                            <a href="#" className="settings mr-2" title="" data-toggle="tooltip" data-original-title="settings mr-2"><i className="fas fa-cog text-danger"></i></a>
+                            <a href="#" className="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i className="fas fa-times-circle text-primary"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a href="#"><img src="/avatar/5.jpg" className="avatar" alt="Avatar"/> Martin Sommer</a></td>
+                        <td>12/08/2017</td>                        
+                        <td>Moderator</td>
+                        <td><span className="status text-warning">•</span> Inativo</td>
+                        <td>Carlosmoreira4568@hotmail.com</td>
+                        <td>
+                            <a href="#" className="settings mr-2" title="" data-toggle="tooltip" data-original-title="settings mr-2"><i className="fas fa-cog text-danger"></i></a>
+                            <a href="#" className="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i className="fas fa-times-circle text-primary"></i></a>
+                        </td>
+                    </tr>                    <tr>
+                        <td><a href="#"><img src="/avatar/5.jpg" className="avatar" alt="Avatar"/> Martin Sommer</a></td>
+                        <td>12/08/2017</td>                        
+                        <td>Moderator</td>
+                        <td><span className="status text-warning">•</span> Inativo</td>
+                        <td>Carlosmoreira4568@hotmail.com</td>
+                        <td>
+                            <a href="#" className="settings mr-2" title="" data-toggle="tooltip" data-original-title="settings mr-2"><i className="fas fa-cog text-danger"></i></a>
+                            <a href="#" className="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i className="fas fa-times-circle text-primary"></i></a>
+                        </td>
+                    </tr>                    <tr>
+                        <td><a href="#"><img src="/avatar/5.jpg" className="avatar" alt="Avatar"/> Martin Sommer</a></td>
+                        <td>12/08/2017</td>                        
+                        <td>Moderator</td>
+                        <td><span className="status text-warning">•</span> Inativo</td>
+                        <td>Carlosmoreira4568@hotmail.com</td>
                         <td>
                             <a href="#" className="settings mr-2" title="" data-toggle="tooltip" data-original-title="settings mr-2"><i className="fas fa-cog text-danger"></i></a>
                             <a href="#" className="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i className="fas fa-times-circle text-primary"></i></a>
