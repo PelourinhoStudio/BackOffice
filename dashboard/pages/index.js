@@ -1,10 +1,10 @@
-import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import DesignerMan from './components/designer-man'
 import Navbar from './components/Layout/navbar'
 import Profile from './components/profile'
 import Menu from './components/menu'
+import Head from 'next/head'
 
 export default function Home() {
   return (
