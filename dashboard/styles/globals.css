@@ -14,10 +14,12 @@
 }
 
 .main-contents {
-
   overflow-y: scroll;
-  max-height: 90vh;
-  
+  max-height: 645px;
+}
+
+.main-table{
+  min-height: 100vh;
 }
 
 .rounded-main {
@@ -48,7 +50,8 @@ nav .navbar-brand {
 
 @media only screen and (min-width: 1500px) {
   .main-contents {
-    width: 1049px !important
+    width: 1049px !important;
+    max-height: 85%;
   }
 
   .navbar-nav {
@@ -152,4 +155,11 @@ table.table .avatar {
   border-radius: 50%;
   vertical-align: middle;
   margin-right: 10px
+}
+
+.modal-dialog {
+  position: absolute !important;
+  top: 43%;
+  left: 50%;
+  transform: translate(-50%, -50%) !important;
 }

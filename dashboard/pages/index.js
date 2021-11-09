@@ -4,6 +4,7 @@ import Navbar from './components/Layout/navbar'
 import Profile from './components/profile'
 import Menu from './components/menu'
 import Head from 'next/head'
+import Script from 'next/script'
 
 
 export default function Home() {
@@ -12,7 +13,9 @@ export default function Home() {
       <>
          <Head>
             <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossOrigin="anonymous" />
+
          </Head>
+         <body>
 
          <div className="main-container">
             <div className="m-auto max-width">
@@ -31,6 +34,12 @@ export default function Home() {
             </div>
          </div>
 
+    
+
+       
+         <Script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></Script>
+      </body>
+                  
       </>
    )
 }
