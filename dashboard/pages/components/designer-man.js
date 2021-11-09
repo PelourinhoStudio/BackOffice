@@ -1,7 +1,27 @@
+import React, { useEffect, useState } from "react"
+import api from '../../services/api'
+import Image from "next/dist/client/image";
+
 export default function DesignerMan() {
+
+    const [users, setUsers] = useState([]);
+
+
+  
+
+    useEffect(() => {
+        api
+          .get("/users")
+          .then((response) => setUsers(response.data))
+          .catch((err) => {
+            console.error("ops! ocorreu um erro" + err);
+          });
+      }, []);
+
 
     return(
 <>
+
 <div className="text-center m-3 rounded-main bg-white">
         <table className="table table-striped table-hover">
                 <thead>
@@ -15,178 +35,38 @@ export default function DesignerMan() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><a href="#"><img src="/avatar/1.jpg" className="avatar" alt="Avatar"/> Michael Holz</a></td>
-                        <td>04/10/2013</td>                        
-                        <td>Administrador</td>
-                        <td><span className="status text-success">•</span> Ativo</td>
-                        <td>Carlosmoreira4568@hotmail.com</td>
-                        <td>
-                            <a href="#" className="settings mr-2" title="" data-toggle="tooltip" data-original-title="settings mr-2"><i className="fas fa-cog text-danger"></i></a>
-                            <a href="#" className="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i className="fas fa-times-circle text-primary"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="#"><img src="/avatar/2.jpg" className="avatar" alt="Avatar"/> Paula Wilson</a></td>
-                        <td>05/08/2014</td>                       
-                        <td>Publicador</td>
-                        <td><span className="status text-success">•</span> Ativo</td>
-                        <td>Carlosmoreira4568@hotmail.com</td>
-                        <td>
-                            <a href="#" className="settings mr-2" title="" data-toggle="tooltip" data-original-title="settings mr-2"><i className="fas fa-cog text-danger"></i></a>
-                            <a href="#" className="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i className="fas fa-times-circle text-primary"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="#"><img src="/avatar/3.jpg" className="avatar" alt="Avatar"/> Antonio Moreno</a></td>
-                        <td>11/05/2015</td>
-                        <td>Publicador</td>
-                        <td><span className="status text-danger">•</span> Suspenso</td>       
-                        <td>Carlosmoreira4568@hotmail.com</td>            
-                        <td>
-                            <a href="#" className="settings mr-2" title="" data-toggle="tooltip" data-original-title="settings mr-2"><i className="fas fa-cog text-danger"></i></a>
-                            <a href="#" className="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i className="fas fa-times-circle text-primary"></i></a>
-                        </td>                        
-                    </tr>
-                    <tr>
-                        <td><a href="#"><img src="/avatar/4.jpg" className="avatar" alt="Avatar"/> Mary Saveley</a></td>
-                        <td>06/09/2016</td>
-                        <td>Revisor</td>
-                        <td><span className="status text-success">•</span> Ativo</td>
-                        <td>Carlosmoreira4568@hotmail.com</td>
-                        <td>
-                            <a href="#" className="settings mr-2" title="" data-toggle="tooltip" data-original-title="settings mr-2"><i className="fas fa-cog text-danger"></i></a>
-                            <a href="#" className="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i className="fas fa-times-circle text-primary"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="#"><img src="/avatar/5.jpg" className="avatar" alt="Avatar"/> Martin Sommer</a></td>
-                        <td>12/08/2017</td>                        
-                        <td>Moderator</td>
-                        <td><span className="status text-warning">•</span> Inativo</td>
-                        <td>Carlosmoreira4568@hotmail.com</td>
-                        <td>
-                            <a href="#" className="settings mr-2" title="" data-toggle="tooltip" data-original-title="settings mr-2"><i className="fas fa-cog text-danger"></i></a>
-                            <a href="#" className="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i className="fas fa-times-circle text-primary"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="#"><img src="/avatar/1.jpg" className="avatar" alt="Avatar"/> Michael Holz</a></td>
-                        <td>04/10/2013</td>                        
-                        <td>Administrador</td>
-                        <td><span className="status text-success">•</span> Ativo</td>
-                        <td>Carlosmoreira4568@hotmail.com</td>
-                        <td>
-                            <a href="#" className="settings mr-2" title="" data-toggle="tooltip" data-original-title="settings mr-2"><i className="fas fa-cog text-danger"></i></a>
-                            <a href="#" className="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i className="fas fa-times-circle text-primary"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="#"><img src="/avatar/2.jpg" className="avatar" alt="Avatar"/> Paula Wilson</a></td>
-                        <td>05/08/2014</td>                       
-                        <td>Publicador</td>
-                        <td><span className="status text-success">•</span> Ativo</td>
-                        <td>Carlosmoreira4568@hotmail.com</td>
-                        <td>
-                            <a href="#" className="settings mr-2" title="" data-toggle="tooltip" data-original-title="settings mr-2"><i className="fas fa-cog text-danger"></i></a>
-                            <a href="#" className="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i className="fas fa-times-circle text-primary"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="#"><img src="/avatar/3.jpg" className="avatar" alt="Avatar"/> Antonio Moreno</a></td>
-                        <td>11/05/2015</td>
-                        <td>Publicador</td>
-                        <td><span className="status text-danger">•</span> Suspenso</td>  
-                        <td>Carlosmoreira4568@hotmail.com</td>                    
-                        <td>
-                            <a href="#" className="settings mr-2" title="" data-toggle="tooltip" data-original-title="settings mr-2"><i className="fas fa-cog text-danger"></i></a>
-                            <a href="#" className="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i className="fas fa-times-circle text-primary"></i></a>
-                        </td>                        
-                    </tr>
-                    <tr>
-                        <td><a href="#"><img src="/avatar/4.jpg" className="avatar" alt="Avatar"/> Mary Saveley</a></td>
-                        <td>06/09/2016</td>
-                        <td>Revisor</td>
-                        <td><span className="status text-success">•</span> Ativo</td>
-                        <td>Carlosmoreira4568@hotmail.com</td>
-                        <td>
-                            <a href="#" className="settings mr-2" title="" data-toggle="tooltip" data-original-title="settings mr-2"><i className="fas fa-cog text-danger"></i></a>
-                            <a href="#" className="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i className="fas fa-times-circle text-primary"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="#"><img src="/avatar/5.jpg" className="avatar" alt="Avatar"/> Martin Sommer</a></td>
-                        <td>12/08/2017</td>                        
-                        <td>Moderator</td>
-                        <td><span className="status text-warning">•</span> Inativo</td>
-                        <td>Carlosmoreira4568@hotmail.com</td>
-                        <td>
-                            <a href="#" className="settings mr-2" title="" data-toggle="tooltip" data-original-title="settings mr-2"><i className="fas fa-cog text-danger"></i></a>
-                            <a href="#" className="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i className="fas fa-times-circle text-primary"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="#"><img src="/avatar/5.jpg" className="avatar" alt="Avatar"/> Martin Sommer</a></td>
-                        <td>12/08/2017</td>                        
-                        <td>Moderator</td>
-                        <td><span className="status text-warning">•</span> Inativo</td>
-                        <td>Carlosmoreira4568@hotmail.com</td>
-                        <td>
-                            <a href="#" className="settings mr-2" title="" data-toggle="tooltip" data-original-title="settings mr-2"><i className="fas fa-cog text-danger"></i></a>
-                            <a href="#" className="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i className="fas fa-times-circle text-primary"></i></a>
-                        </td>
-                    </tr>                    <tr>
-                        <td><a href="#"><img src="/avatar/5.jpg" className="avatar" alt="Avatar"/> Martin Sommer</a></td>
-                        <td>12/08/2017</td>                        
-                        <td>Moderator</td>
-                        <td><span className="status text-warning">•</span> Inativo</td>
-                        <td>Carlosmoreira4568@hotmail.com</td>
-                        <td>
-                            <a href="#" className="settings mr-2" title="" data-toggle="tooltip" data-original-title="settings mr-2"><i className="fas fa-cog text-danger"></i></a>
-                            <a href="#" className="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i className="fas fa-times-circle text-primary"></i></a>
-                        </td>
-                    </tr>                    <tr>
-                        <td><a href="#"><img src="/avatar/5.jpg" className="avatar" alt="Avatar"/> Martin Sommer</a></td>
-                        <td>12/08/2017</td>                        
-                        <td>Moderator</td>
-                        <td><span className="status text-warning">•</span> Inativo</td>
-                        <td>Carlosmoreira4568@hotmail.com</td>
-                        <td>
-                            <a href="#" className="settings mr-2" title="" data-toggle="tooltip" data-original-title="settings mr-2"><i className="fas fa-cog text-danger"></i></a>
-                            <a href="#" className="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i className="fas fa-times-circle text-primary"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="#"><img src="/avatar/5.jpg" className="avatar" alt="Avatar"/> Martin Sommer</a></td>
-                        <td>12/08/2017</td>                        
-                        <td>Moderator</td>
-                        <td><span className="status text-warning">•</span> Inativo</td>
-                        <td>Carlosmoreira4568@hotmail.com</td>
-                        <td>
-                            <a href="#" className="settings mr-2" title="" data-toggle="tooltip" data-original-title="settings mr-2"><i className="fas fa-cog text-danger"></i></a>
-                            <a href="#" className="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i className="fas fa-times-circle text-primary"></i></a>
-                        </td>
-                    </tr>                    <tr>
-                        <td><a href="#"><img src="/avatar/5.jpg" className="avatar" alt="Avatar"/> Martin Sommer</a></td>
-                        <td>12/08/2017</td>                        
-                        <td>Moderator</td>
-                        <td><span className="status text-warning">•</span> Inativo</td>
-                        <td>Carlosmoreira4568@hotmail.com</td>
-                        <td>
-                            <a href="#" className="settings mr-2" title="" data-toggle="tooltip" data-original-title="settings mr-2"><i className="fas fa-cog text-danger"></i></a>
-                            <a href="#" className="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i className="fas fa-times-circle text-primary"></i></a>
-                        </td>
-                    </tr>                    <tr>
-                        <td><a href="#"><img src="/avatar/5.jpg" className="avatar" alt="Avatar"/> Martin Sommer</a></td>
-                        <td>12/08/2017</td>                        
-                        <td>Moderator</td>
-                        <td><span className="status text-warning">•</span> Inativo</td>
-                        <td>Carlosmoreira4568@hotmail.com</td>
-                        <td>
-                            <a href="#" className="settings mr-2" title="" data-toggle="tooltip" data-original-title="settings mr-2"><i className="fas fa-cog text-danger"></i></a>
-                            <a href="#" className="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i className="fas fa-times-circle text-primary"></i></a>
-                        </td>
-                    </tr>
+                   
+
+                        {
+        users.map((user) => {
+           
+          return (
+         <tr key={user.email}>
+         <td><a href="#"><img src={user.avatar} className="avatar" alt="Avatar"/></a></td>
+         <td>{user.lastOnline}</td>                        
+         <td>
+            {user.userType}
+         </td>
+         <td>
+            {
+                String(user.state).toUpperCase() == 'ATIVO' ? <><span className="status text-success">•</span> Ativo</> : <></>
+            }
+            {
+                String(user.state).toUpperCase() == 'INATIVO' ? <><span className="status text-danger">•</span> Inativo</> : <></>
+            }
+                        {
+                String(user.state).toUpperCase()== 'SUSPENSO' ? <><span className="status text-warning">•</span> Suspenso</> : <></>
+            }
+        </td>
+         <td>{user.email}</td>
+         <td>
+             <a href="#" className="settings mr-2" title="" data-toggle="tooltip" data-original-title="settings mr-2"><i className="fas fa-cog text-danger"></i></a>
+             <a href="#" className="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i className="fas fa-times-circle text-primary"></i></a>
+         </td>
+     </tr>
+         )
+        })
+      }
                 </tbody>
             </table>
         </div>
