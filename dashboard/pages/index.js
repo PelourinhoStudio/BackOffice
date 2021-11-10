@@ -9,6 +9,7 @@ import Script from 'next/script'
 
 export default function Home() {
 
+
    return (
       <>
          <Head>
@@ -21,7 +22,9 @@ export default function Home() {
             <div className="m-auto max-width">
                <Navbar />
                <div className="rounded-main main-contents d-none mt-2 d-md-block">
-                  <DesignerMan />
+                  {
+                     1==1 ? <DesignerMan/> : <></>
+                  }
                </div>
                <div className="w-100 roudend mb-3">
                   <div className="m-auto m-md-0" style={{ width: "317px" }}>
@@ -29,8 +32,7 @@ export default function Home() {
                   </div>
                </div>
                <div className="bg-secondary w-100 rounded-main p-3">
-                  <Menu>
-                  </Menu>
+                  <Menu Menu/>
                </div>
             </div>
          </div>

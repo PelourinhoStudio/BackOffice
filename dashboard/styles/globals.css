@@ -60,9 +60,9 @@ nav .navbar-brand {
 }
 
 
-.form-control {
+.navbar-collapse .form-control {
   border-radius: 20px !important;
-  border: 0px !important;
+border-color: 0;
 }
 
 .form-inline .form-control {
