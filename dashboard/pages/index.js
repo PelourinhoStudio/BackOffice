@@ -29,7 +29,8 @@ export default function Home() {
                   </div>
                </div>
                <div className="bg-secondary w-100 rounded-main p-3">
-                  <Menu></Menu>
+                  <Menu>
+                  </Menu>
                </div>
             </div>
          </div>
