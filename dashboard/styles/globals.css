@@ -176,3 +176,21 @@ height: 125px;
   left: 50%;
   transform: translate(-50%, -50%) !important;
 }
+
+::-webkit-scrollbar{
+  width: 13px;
+  height: 13px;
+  }
+  ::-webkit-scrollbar-thumb{
+  background: #d8d8d8;
+  border-radius: 0px;
+  }
+  ::-webkit-scrollbar-thumb:hover{
+  background: #B3AFB3;
+  }
+  ::-webkit-scrollbar-track{
+  background: rgb(158, 158, 158);
+  border-radius: 0px;
+  box-shadow: inset 0px 0px 0px 0px #F0F0F0;
+  }
+  
