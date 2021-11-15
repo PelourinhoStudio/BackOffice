@@ -182,7 +182,7 @@ height: 125px;
   height: 13px;
   }
   ::-webkit-scrollbar-thumb{
-    background: rgb(204, 204, 204);
+    background: rgb(184, 184, 184);
   border-radius: 0px;
   }
   ::-webkit-scrollbar-thumb:hover{
