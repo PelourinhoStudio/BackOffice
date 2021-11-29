@@ -1,21 +1,15 @@
 import "moment/locale/pt"
-import moment from "moment"
+import moment from "moment";
 import { useForm } from "react-hook-form"
 import React, { useEffect, useState } from "react"
 import api from '../../../../services/api'
-import Cookies from 'universal-cookie'
 
-export default function DesignerList({user, updateListFunc}) {
+export default function Userslist({user, updateListFunc}) {
 
   const {register, handleSubmit } = useForm()
-  const cookies = new Cookies()
 
   function deleteUser() {
-    api.delete(('/users/' + user._id),{
-      headers: {
-          "x-access-token":  cookies.get('jwt')
-      },
-  });
+    api.delete('/users/' + user._id);
     window.location.reload();
  }
 

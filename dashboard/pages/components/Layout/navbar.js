@@ -8,12 +8,6 @@ export default function Navbar() {
          <span className="navbar-toggler-icon"></span>
          </button>
          <div className="collapse navbar-collapse mt-2" id="navbarSupportedContent">
-            <form className="form-inline my-0" style={{marginLeft: "176px"}}>
-            <div className="searchForm">
-               <button className="btn search-btn" type="submit"><i className="fas fa-search text-primary"></i></button>
-               <input className="form-control mr-sm-2" type="search" placeholder="Search for files by name or color" aria-label="Search for files by name or color"/>
-            </div>
-            </form>
             <ul className="navbar-nav ml-auto">
             <li className="nav-item Ativo">
                <a className="nav-link" href="#">Exposições</a>

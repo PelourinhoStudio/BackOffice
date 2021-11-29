@@ -31,7 +31,7 @@
   src: url(../public/fonts/nulshock.ttf);
 }
 
-nav .navbar-brand {
+nav .navbar-brand, .logo {
   color: white !important;
   font-family: 'nullshock';
 }
@@ -63,6 +63,13 @@ nav .navbar-brand {
 .navbar-collapse .form-control {
   border-radius: 20px !important;
 border-color: #184281;
+
+}
+
+.login input {
+  background-color: #020d20 !important;
+  border-color: #184281 !important;
+  border-radius: 5px !important
 }
 
 .form-inline .form-control {
@@ -194,4 +201,71 @@ height: 125px;
   border-radius: 0px;
   box-shadow: inset 0px 0px 0px 0px #F0F0F0;
   }
+
+  .text-title {
+    width: 150px;
+    padding: 20px;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: help;
+    
+  }
   
+  .form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) !important;
+  background-color: #031534;
+  border-radius: 6px;
+}
+
+
+.loading-effect{
+  animation-name: spin;
+  animation-duration: 2000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear; 
+}
+
+.form-floating label{
+  color: rgb(255 255 255);
+}
+
+@keyframes spin {
+  from {
+      transform:rotate(0deg);
+  }
+  to {
+      transform:rotate(360deg);
+  }
+}
+
+.fc-button-primary:disabled {
+  color: #fff !important;
+  background-color: #2f3236 !important;
+  border-color: #2f3236 !important;;
+}
+.fc-button-primary:not(:disabled):active, .fc-button-primary:not(:disabled).fc-button-active {
+  background-color: #121416!important;;
+  border-color: #121416!important;;
+}
+.fc-button-primary {
+  background-color: #212529!important;;
+  border-color: #212529!important;;
+}
+.fc-button-primary:hover {
+  color: #fff;
+  background-color: #191c1f!important;;
+  border-color: #191c1f!important;;
+}
+
+.app-bg{
+  background: linear-gradient(125deg, rgb(40 45 50) 0%, rgb(18 20 22) 100%);
+  width: 100%;
+  height: 100vh;
+}

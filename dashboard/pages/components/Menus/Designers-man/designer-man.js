@@ -1,35 +1,33 @@
-import React, { useEffect, useState } from "react"
 import api from '../../../../services/api'
-import Image from "next/dist/client/image";
-import moment from "moment";
-import { useForm } from "react-hook-form"
 import "moment/locale/pt";
 import DesignerList from "./designer-list";
-
+import React, { useEffect, useState } from "react";
+import Cookies from 'universal-cookie';
 
 
 export default function DesignerMan() {
-
    const [users, setUsers] = useState([]);
+   const cookies = new Cookies();
 
    useEffect(() => {
       api
-         .get("/users")
+         .get("admin/users/type/designer", {
+            headers: {
+                "x-access-token":  cookies.get('jwt')
+            },
+        })
          .then((response) => setUsers(response.data))
          .catch((err) => {
             console.error("ops! ocorreu um erro" + err);
          });
    }, []);
-
-   function updateList() {
-   setUsers([api.get("/users").then((response) => setUsers(response.data))]);
-   }
+   
+   const updateList = (async () => {
+      setUsers(() => [api.get("/users").then((response) => setUsers(response.data))]);
+   });
 
    return (
       <>
-      {//<i className="fas fa-redo-alt text-primary mt-2" onClick={() => updateList()}></i>
-      }{}
-     
             <table users={users} className="table table-striped table-hover">
                <thead>
                   <tr>
@@ -45,8 +43,8 @@ export default function DesignerMan() {
                   {
                      users.map((user) => {
                         return (
-                           <DesignerList key={user._id} user={user}/>
-                        )
+                              <DesignerList key={user._id} user={user} and updateListFunc={updateList}/>
+                        ) 
                      })
                   }
                </tbody>
