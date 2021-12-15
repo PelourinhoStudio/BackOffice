@@ -29,10 +29,29 @@ const Login = (() => {
     }
 	await delay(1000)
 
+  //Verifica se os dados de autenticação estão corretos
     api.post("auth/login", LoginData).then((response) => {
       cookies.set('jwt', response.data, { path: '/' })
-      router.push('/')
+
+        //Se os dados de autenticação forem corretos, verifica se tem permissões para entrar na dashboard.
+        api.get("me", {headers: {"x-access-token":  cookies.get('jwt')},
+        })
+        .then((response) => {
+          //Se o utilizador não tiver permissões fica no login e recebe mensagem de erro
+          if (!(response.data.userType === 'admin')) {
+           cookies.remove('jwt')
+           setwrongData(2)
+          }else{
+            router.push('/')
+          }
+        })
+        //Se o utilizador já não estiver logado vai para o login
+        .catch((err) => {
+           cookies.remove('jwt')
+           router.push('/')
+              });
     }
+    //Se os dados de autenticação não estiverem corretos recebe mensagem de erro
     ).catch((err) => {
         setwrongData(1)
     });
@@ -53,10 +72,17 @@ const Login = (() => {
       })}>
       { wrongData === 1 ?
       <>
-      <div className="bg-danger text-white mb-2 rounded p-2">
+      <div className="bg-danger text-white mb-2 rounded p-2 text-center">
          <span>Password ou email incorretos!</span>
       </div>
       </>
+      : wrongData === 2 ?
+      <>
+      <div className="bg-warning text-dark mb-2 rounded p-2 text-center">
+         <span>Não tem permissões para entrar</span>
+      </div>
+      </>
+      
       : <></>
       }
       <div className="form-floating">

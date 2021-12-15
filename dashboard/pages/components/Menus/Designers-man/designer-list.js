@@ -29,8 +29,13 @@ export default function DesignerList({user, updateListFunc}) {
     email: values.email,
   }
 
-  api
-   .put(`/users/${user._id}`, updateUsers)
+  api.put(`/users/${user._id}`, {
+   headers: {
+       "x-access-token":  cookies.get('jwt')
+   }
+}, updateUsers).catch((error) => {
+   alert(error);
+})
    
 
    if (updateListFunc) {
@@ -119,7 +124,7 @@ export default function DesignerList({user, updateListFunc}) {
                    <select className="form-control" {...register("userType", { required: true })}>
                       {String(user.userType).toUpperCase() == 'ADMIN' ? <><option defaultValue="selected" className="text-danger">Admin</option></> : <><option className="text-danger">Admin</option></>}
                       {String(user.userType).toUpperCase() == 'DESIGNER' ? <><option defaultValue="selected" className="text-warning">Designer</option></> : <><option className="text-warning">Designer</option></>}
-                      {String(user.userType).toUpperCase() == 'DEfAULT' ? <><option defaultValue="selected" className="text-success">Default</option></> : <><option className="text-success">Default</option></>}
+                      {String(user.userType).toUpperCase() == 'USER' ? <><option defaultValue="selected" className="text-success">User</option></> : <><option className="text-success">Default</option></>}
                    </select>
                  </div>
                  <div className="form-group col-6">

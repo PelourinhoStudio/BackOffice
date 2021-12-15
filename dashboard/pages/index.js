@@ -17,7 +17,6 @@ export default function Home() {
          { 
          
          (cookies.get('jwt') === undefined) ?
-
          <><Login/></> 
          : 
          <><Dashboard/></>

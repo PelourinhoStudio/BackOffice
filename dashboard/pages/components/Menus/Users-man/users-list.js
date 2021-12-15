@@ -3,13 +3,15 @@ import moment from "moment";
 import { useForm } from "react-hook-form"
 import React, { useEffect, useState } from "react"
 import api from '../../../../services/api'
+import Cookies from 'universal-cookie'
 
 export default function Userslist({user, updateListFunc}) {
 
   const {register, handleSubmit } = useForm()
+  const cookies = new Cookies();
 
   function deleteUser() {
-    api.delete('/users/' + user._id);
+    api.delete('admin/users/' + user._id, {headers: {"x-access-token":  cookies.get('jwt')}});
     window.location.reload();
  }
 
@@ -22,9 +24,12 @@ export default function Userslist({user, updateListFunc}) {
     state: values.state,
     email: values.email,
   }
+  console.log(updateUsers)
 
-  api
-   .put(`/users/${user._id}`, updateUsers)
+  api.put(`admin/users/${user._id}`, updateUsers, {headers: {"x-access-token":  cookies.get('jwt')}})
+  .catch((err) => {
+  alert("erro é " + err)
+  })
    
 
    if (updateListFunc) {
@@ -111,17 +116,17 @@ export default function Userslist({user, updateListFunc}) {
                  <div className="form-group col-6">
                    <label>Estatuto</label>
                    <select className="form-control" {...register("userType", { required: true })}>
-                      {String(user.userType).toUpperCase() == 'ADMIN' ? <><option defaultValue="selected" className="text-danger">Admin</option></> : <><option className="text-danger">Admin</option></>}
-                      {String(user.userType).toUpperCase() == 'DESIGNER' ? <><option defaultValue="selected" className="text-warning">Designer</option></> : <><option className="text-warning">Designer</option></>}
-                      {String(user.userType).toUpperCase() == 'DEfAULT' ? <><option defaultValue="selected" className="text-success">Default</option></> : <><option className="text-success">Default</option></>}
+                      {String(user.userType).toUpperCase() == 'ADMIN' ? <><option selected className="text-danger">Admin</option></> : <><option className="text-danger">Admin</option></>}
+                      {String(user.userType).toUpperCase() == 'DESIGNER' ? <><option selected className="text-warning">Designer</option></> : <><option className="text-warning">Designer</option></>}
+                      {String(user.userType).toUpperCase() == 'USER' ? <><option selected className="text-success">User</option></> : <><option className="text-success">User</option></>}
                    </select>
                  </div>
                  <div className="form-group col-6">
                    <label>Estado</label>
                    <select className="form-control" {...register("state", { required: true })}>
-                      {String(user.state).toUpperCase() == 'INATIVO' ? <><option defaultValue="selected" className="text-danger">Inativo</option></> : <><option className="text-danger">Inativo</option></>}
-                      {String(user.state).toUpperCase() == 'SUSPENSO' ? <><option defaultValue="selected" className="text-warning">Suspenso</option></> : <><option className="text-warning">Suspenso</option></>}
-                      {String(user.state).toUpperCase() == 'ATIVO' ? <><option defaultValue="selected" className="text-success">Ativo</option></> : <><option className="text-success">Ativo</option></>}
+                      {String(user.state).toUpperCase() == 'INATIVO' ? <><option selected className="text-danger">Inativo</option></> : <><option className="text-danger">Inativo</option></>}
+                      {String(user.state).toUpperCase() == 'SUSPENSO' ? <><option selected className="text-warning">Suspenso</option></> : <><option className="text-warning">Suspenso</option></>}
+                      {String(user.state).toUpperCase() == 'ATIVO' ? <><option selected className="text-success">Ativo</option></> : <><option className="text-success">Ativo</option></>}
                    </select>
                  </div>
                </div>
