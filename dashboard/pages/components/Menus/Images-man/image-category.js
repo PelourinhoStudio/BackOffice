@@ -40,7 +40,7 @@ export default function ImageCategory({image, updateListFunc}) {
 <Masonry
   breakpointCols={4}
   className="my-masonry-grid"
-  columnClassName="my-masonry-grid_column">{image.imageCDN}</Masonry>
+  columnClassName="my-masonry-grid_column" ><img src={image.imageCDN} onClick={() => alert("teste")}></img></Masonry>
 </>
         
     );

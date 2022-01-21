@@ -130,9 +130,6 @@ export default function ImageMan() {
                         <select className="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
                            {modalImageUpdate?.imageType == "real" ? <option id="imageTypeReal" selected>Real</option> : <option id="imageTypeReal">Real</option>}
                            {modalImageUpdate?.imageType == "digital" ? <option id="imageTypeDigital" selected>Digital</option> : <option id="imageTypeDigital">Digital</option>}
-
-
-
                         </select>
                         <div className="form-group">
                            <label className="text-dark">Tags</label>
@@ -208,7 +205,7 @@ export default function ImageMan() {
                               images.map((image) => {
                                  return (
                                     <>
-                                       <img className="item" src={image.imageCDN}></img>
+                                       <img className="item" src={image.imageCDN} onClick={() => updateImage(image)}></img>
                                     </>
                                  )
                               })
