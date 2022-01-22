@@ -4,7 +4,8 @@ import Script from 'next/script'
 import Login from './auth/login'
 import Cookies from 'universal-cookie';
 import Dashboard from './dashboard'
-
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 export default function Home() {
    const cookies = new Cookies();
    return (
@@ -14,6 +15,7 @@ export default function Home() {
          </Head>
 
          <body>
+         <ToastContainer />
          { 
          
          (cookies.get('jwt') === undefined) ?

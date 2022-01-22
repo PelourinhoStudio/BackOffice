@@ -6,14 +6,14 @@ import api from '../../../../services/api'
 import { ref, storage, uploadBytesResumable, getDownloadURL } from '../../../../services/firebase'
 import ReactTooltip from 'react-tooltip';
 
-export default function ImageList({ image, updateListFunc, modalPreview, updateImage }) {
+export default function ImageList({ image, updateListFunc, modalPreview, updateModalImage }) {
 
       const { register, handleSubmit } = useForm()
 
-      function updateImages(values) {
+      function updateModalImages(values) {
             const storageRef = ref(storage, 'images/' + data.images[0].name)
             const uploadTask = uploadBytesResumable(storageRef, data.images[0])
-            const updateImages = {
+            const updateModalImages = {
                   title: data.title,
                   description: data.description,
                   category: data.category,
@@ -26,7 +26,7 @@ export default function ImageList({ image, updateListFunc, modalPreview, updateI
                   dislikes: data.dislikes
             }
             api
-                  .put(`/Images/${image._id}`, updateImages)
+                  .put(`/Images/${image._id}`, updateModalImages)
 
 
             if (updateListFunc) {
@@ -55,7 +55,15 @@ export default function ImageList({ image, updateListFunc, modalPreview, updateI
                               </div>
                         </td>
                         <td>
-                              {image.tags}
+                              {
+                                    image.tags.map((tags) => {
+                                          return (
+                                                <>
+                                                      {tags + " "}
+                                                </>
+                                          )
+                                    })}
+
                         </td>
                         <td>
                               {image.price}
@@ -64,7 +72,7 @@ export default function ImageList({ image, updateListFunc, modalPreview, updateI
                               {moment(image.year).format('LLL')}
                         </td>
                         <td>
-                              <a href="#" className="settings mr-2" onClick={() => updateImage(image)}><i className="fas fa-cog text-danger"></i></a>
+                              <a href="#" className="settings mr-2" onClick={() => updateModalImage(image)}><i className="fas fa-cog text-danger"></i></a>
                               <a href="" className="delete" data-bs-toggle="modal" data-bs-target={"#delete_" + image._id}><i className="fas fa-times-circle text-primary"></i></a>
                         </td>
                   </tr>

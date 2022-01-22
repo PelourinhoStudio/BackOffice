@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react"
 import api from '../../../../services/api'
 import ImageList from "./image-list";
-import ImageCategory from "./image-category";
 import "moment/locale/pt";
 import Cookies from 'universal-cookie';
-import Masonry from 'react-masonry-css'
+import $ from 'jquery';
+import { ref, storage, uploadBytesResumable, getDownloadURL } from '../../../../services/firebase'
+import { useForm } from "react-hook-form"
+import { toast } from 'react-toastify';
 
 
 export default function ImageMan() {
@@ -20,8 +22,19 @@ export default function ImageMan() {
    //Guarda os dados da imagem para atualização da mesma
    const [modalImageUpdate, setModalImageUpdate] = useState(null)
 
+   const [tags, setTags] = useState(null)
+
+   const [savedtags, setSavedTags] = useState(null)
+
+
+   const { register, handleSubmit } = useForm()
+
    //Dá fetch a todas as imagens
    useEffect(() => {
+      fetchImages()
+   }, []);
+
+   function fetchImages() {
       api
          .get("images", {
             headers: {
@@ -32,7 +45,38 @@ export default function ImageMan() {
          .catch((err) => {
             console.error("ops! ocorreu um erro" + err);
          });
-   }, []);
+   }
+
+   function updateImage() {
+      console.log( document.getElementById('imageUpload').files[0])
+      const storageRef = ref(storage, 'images/' + document.getElementById('imageUpload').files[0].name);
+      uploadBytesResumable(storageRef, document.getElementById('imageUpload').files[0]);
+
+      getDownloadURL(storageRef)
+         .then((res) => {
+            const newImage = {
+               title: document.getElementById('imageTitle').value,
+               description: document.getElementById('imageDescription').value,
+               categorys: document.getElementById('imageCategory').value,
+               tags: savedtags,
+               imageType: document.getElementById('imageType').value,
+               imageCDN: res,
+            }
+            api.put(`/admin/images/${modalImageUpdate._id}`, newImage, {
+               headers: {
+                  "x-access-token": cookies.get('jwt')
+               },
+            })
+               .then(res => {
+                  toast.success("Imagem enviada com sucesso!")
+               })
+               .catch(err => {
+                  if (err) {
+                     toast.error("Erro ao enviar a imagem. Tenta novamente mais tarde.")
+                  }
+               })
+         })
+   }
 
 
    //Atualiza os dados do Modal que dá preview às imagens e abre o modal.
@@ -42,28 +86,47 @@ export default function ImageMan() {
    }
 
    //Atualiza os dados do modal de atualização de imagem e abre o mesmo.
-   function updateImage(modalImageData) {
+   function updateModalImage(modalImageData) {
       setModalImageUpdate(modalImageData)
+      updateTags(modalImageData)
+
       document.getElementById("fakeButtonUpdate").click()
+
    }
 
-   function deleteTag(id, tagName) {
-      var txt;
-      if (confirm("Ao clicar irá eliminar a tag " + tagName)) {
-         txt = "Sim"
-      } else {
-         txt = "Não";
+   function deleteTag(content, tagName) {
+      if (confirm("Ao clicar irá eliminar a tag " + tagName) == true) {
+         var finded = null;
+         const newContent = content
+         finded = newContent?.tags.indexOf(tagName)
+         newContent?.tags.splice(finded, 1)
+         console.log(newContent)
+         if (finded != null) {
+            setModalImageUpdate(newContent)
+            updateTags(newContent)
+         }
       }
    }
 
    function addTag() {
-      let text;
-      let person = prompt("Qual é a tag que deseja adicionar?", "");
-      if (person == null || person == "") {
-         text = "User cancelled the prompt.";
-      } else {
-         text = "Hello " + person + "! How are you today?";
+      let addTag = prompt("Qual é a tag que deseja adicionar?", "");
+      if (addTag != null) {
+         const newContent = modalImageUpdate
+         newContent?.tags.push(addTag)
+         setModalImageUpdate(newContent)
+         updateTags(newContent)
       }
+   }
+
+   function updateTags(content) {
+      let buttons = []
+      let saveTags = []
+      for (let i = 0; i < content?.tags.length; i++) {
+         buttons.push(<><div className="btn btn-danger mr-1 mb-1" onClick={() => deleteTag(content, content?.tags[i])}>{content?.tags[i]}</div></>)
+         saveTags.push(content?.tags[i])
+      }
+      setSavedTags(saveTags)
+      setTags(buttons)
    }
 
    return (
@@ -75,13 +138,13 @@ export default function ImageMan() {
             <div className="modal-dialog" role="document">
                <div className="modal-content">
                   <div className="modal-header">
-                     <h5 className="modal-title" id="exampleModalLabel">{modalImagePreview !== null ? modalImagePreview.title : <></>}</h5>
-                     <button type="button" className="close" data-bs-dismiss="modal" data-tip="Close">
+                     <h5 className="modal-title text-dark" id="exampleModalLabel">{modalImagePreview?.title}</h5>
+                     <button type="button" className="close" data-bs-dismiss="modal" data-tip="Close" >
                         <span aria-hidden="true">&times;</span>
                      </button>
                   </div>
-                  <div className="modal-body p-0">
-                     <img src={modalImagePreview !== null ? modalImagePreview.imageCDN : <></>} width="400px" alt="Avatar" />
+                  <div className="modal-body p-4 text-center">
+                     <img src={modalImagePreview?.imageCDN} width="400px" alt="Avatar" />
                   </div>
                </div>
             </div>
@@ -95,58 +158,62 @@ export default function ImageMan() {
             <div className="modal-dialog" role="document">
                <div className="modal-content">
                   <div className="modal-header">
-                     <h5 className="modal-title" id="exampleModalLabel">{modalImageUpdate !== null ? modalImageUpdate.title : <></>}</h5>
+                     <h5 className="modal-title" id="exampleModalLabel">{modalImageUpdate?.title}</h5>
                      <button type="button" className="close" data-bs-dismiss="modal" data-tip="Close">
                         <span aria-hidden="true">&times;</span>
                      </button>
                   </div>
                   <div className="modal-body p-0">
-
-
-                     <form className="m-4">
+                     <form className="m-4" onSubmit={handleSubmit(updateImage)}>
                         <div className="text-center ">
                            <img src={modalImageUpdate?.imageCDN} className="rounded" width="100px" alt="Avatar" />
+                        </div>
+                        <div class="mb-3">
+                           <label for="formFile" className="form-label">Default file input example</label>
+                           <input className="form-control p-1" id="imageUpload" type="file" />
+                        </div>
+
+                        <div className="form-group">
+                           <label className="text-dark">Author</label>
+                           <input type="text" className="form-control" id="imageAuthorName" placeholder="Image Title" value={(modalImageUpdate?.author.firstName + " " + modalImageUpdate?.author.lastName)} disabled />
                         </div>
 
                         <div className="form-group">
                            <label className="text-dark">Title</label>
-                           <input type="email" className="form-control" value={modalImageUpdate?.title} placeholder="Image Title" />
+                           <input type="text" className="form-control" id="imageTitle" defaultValue={modalImageUpdate?.title} placeholder="Image Title" required />
                         </div>
                         <div className="form-group">
                            <label className="text-dark">Description</label>
-                           <textarea type="email" className="form-control" value={modalImageUpdate?.description} placeholder="Image description"></textarea>
+                           <textarea type="text" className="form-control" id="imageDescription" {...register("description")} defaultValue={modalImageUpdate?.description} placeholder="Image description" required />
                         </div>
 
                         <div className="form-group">
                            <label className="text-dark">Categorys</label>
-                           <select multiple className="form-control" id="exampleFormControlSelect2">
+                           <select multiple className="form-control" id="imageCategory" {...register("categorys")} required>
                               {modalImageUpdate?.category.includes("landscape") ? <option id="categoryLandscape" selected>Landscape</option> : <option id="categoryLandscape" >Landscape</option>}
                               {modalImageUpdate?.category.includes("wallpaper") ? <option id="categoryWallpaper" selected>Wallpaper</option> : <option id="categoryWallpaper" >Wallpaper</option>}
                               {modalImageUpdate?.category.includes("drawing") ? <option id="categoryDrawing" selected>Drawing</option> : <option id="categoryDrawing" >Drawing</option>}
                               {modalImageUpdate?.category.includes("nature") ? <option id="categoryNature" selected>Nature</option> : <option id="categoryNature" >Nature</option>}
                            </select>
                         </div>
-                        <p className="text-dark mb-2">Tipo da imagem</p>
-                        <select className="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                        <p className="text-dark mb-2">Image Type</p>
+                        <select className="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="imageType" {...register("imageType")} >
                            {modalImageUpdate?.imageType == "real" ? <option id="imageTypeReal" selected>Real</option> : <option id="imageTypeReal">Real</option>}
                            {modalImageUpdate?.imageType == "digital" ? <option id="imageTypeDigital" selected>Digital</option> : <option id="imageTypeDigital">Digital</option>}
                         </select>
                         <div className="form-group">
                            <label className="text-dark">Tags</label>
-                           <div className="col-12 d-flex px-0">
+                           <div className="col-12 d-flex px-0 row mx-0">
                               {
-                                 modalImageUpdate?.tags.map((tags) => {
-                                    return <><div className="btn btn-danger mr-1" onClick={() => deleteTag(modalImageUpdate?._id, tags)}>{tags}</div></>
-                                 })
+                                 tags
                               }
-                              <div className="btn btn-outline-danger" onClick={() => addTag()}><i className="fas fa-plus"></i></div>
+                              <div className="btn btn-outline-danger mb-1" onClick={() => addTag()}><i className="fas fa-plus"></i></div>
                            </div>
                         </div>
+
+                        <button type="submit" className="btn btn-dark float-right mb-4">Atualizar dados</button>
                      </form>
 
-                  </div>
-                  <div className="modal-footer">
-                     <button className="btn btn-dark">Atualizar dados</button>
                   </div>
                </div>
             </div>
@@ -191,7 +258,7 @@ export default function ImageMan() {
                               images.map((image) => {
                                  return (
                                     <>
-                                       <ImageList key={image._id} image={image} modalPreview={modalPreview} updateImage={updateImage} />
+                                       <ImageList key={image._id} image={image} modalPreview={modalPreview} updateModalImage={updateModalImage} />
                                     </>
                                  )
                               })
@@ -205,7 +272,7 @@ export default function ImageMan() {
                               images.map((image) => {
                                  return (
                                     <>
-                                       <img className="item" src={image.imageCDN} onClick={() => updateImage(image)}></img>
+                                       <img className="item" src={image.imageCDN} onClick={() => updateModalImage(image)}></img>
                                     </>
                                  )
                               })
