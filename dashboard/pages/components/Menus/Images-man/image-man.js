@@ -7,9 +7,13 @@ import $ from 'jquery';
 import { ref, storage, uploadBytesResumable, getDownloadURL } from '../../../../services/firebase'
 import { useForm } from "react-hook-form"
 import { toast } from 'react-toastify';
+import moment from "moment"
 
 
 export default function ImageMan() {
+   const { register, handleSubmit } = useForm()
+
+
    const cookies = new Cookies();
    //Guarda as imagens que vieram da Api
    const [images, setImages] = useState([])
@@ -21,19 +25,18 @@ export default function ImageMan() {
    const [modalImagePreview, setmodalImagePreview] = useState(null)
    //Guarda os dados da imagem para atualização da mesma
    const [modalImageUpdate, setModalImageUpdate] = useState(null)
-
+   //Guarda tags em HTML
    const [tags, setTags] = useState(null)
-
+   //Guarda as tags para serem enviadas para o servidor
    const [savedtags, setSavedTags] = useState(null)
 
-
-   const { register, handleSubmit } = useForm()
 
    //Dá fetch a todas as imagens
    useEffect(() => {
       fetchImages()
    }, []);
 
+   //Faz o fetch de todas as obras
    function fetchImages() {
       api
          .get("images", {
@@ -47,35 +50,97 @@ export default function ImageMan() {
          });
    }
 
+   //Atualiza as Imagens
    function updateImage() {
-      console.log( document.getElementById('imageUpload').files[0])
-      const storageRef = ref(storage, 'images/' + document.getElementById('imageUpload').files[0].name);
-      uploadBytesResumable(storageRef, document.getElementById('imageUpload').files[0]);
-
-      getDownloadURL(storageRef)
-         .then((res) => {
-            const newImage = {
-               title: document.getElementById('imageTitle').value,
-               description: document.getElementById('imageDescription').value,
-               categorys: document.getElementById('imageCategory').value,
-               tags: savedtags,
-               imageType: document.getElementById('imageType').value,
-               imageCDN: res,
-            }
-            api.put(`/admin/images/${modalImageUpdate._id}`, newImage, {
-               headers: {
-                  "x-access-token": cookies.get('jwt')
-               },
-            })
-               .then(res => {
-                  toast.success("Imagem enviada com sucesso!")
-               })
-               .catch(err => {
-                  if (err) {
-                     toast.error("Erro ao enviar a imagem. Tenta novamente mais tarde.")
+      //Se o admin também atualizar a imagem
+      if (document.getElementById('imageUpload').files[0] != undefined) {
+         const storageRef = ref(storage, 'images/' + document.getElementById('imageUpload').files[0].name)
+         uploadBytesResumable(storageRef, document.getElementById('imageUpload').files[0])
+         getDownloadURL(storageRef)
+            .then((res) => {
+               var selected = [];
+               for (var option of document.getElementById('imageCategory').options) {
+                  if (option.selected) {
+                     selected.push(option.value.toLowerCase());
                   }
+               }
+               const newImage = {
+                  title: document.getElementById('imageTitle').value,
+                  description: document.getElementById('imageDescription').value,
+                  category: selected,
+                  tags: savedtags,
+                  imageType: document.getElementById('imageType').value.toLowerCase(),
+                  imageCDN: res,
+                  year: document.getElementById('imageYear').value,
+                  price: document.getElementById('imagePrice').value
+               }
+               api.put(`/admin/images/${modalImageUpdate._id}`, newImage, {
+                  headers: {
+                     "x-access-token": cookies.get('jwt')
+                  },
                })
+                  .then(res => {
+                     toast.success("Imagem enviada com sucesso!")
+                     fetchImages()
+                     document.getElementById("closeModalImageUpdate").click()
+                  })
+                  .catch(err => {
+                     if (err) {
+                        toast.error("Erro ao enviar a imagem. Tenta novamente mais tarde.")
+                     }
+                  })
+            })
+         //Se o admin apenas atualizar os dados
+      } else {
+         var selected = [];
+         for (var option of document.getElementById('imageCategory').options) {
+            if (option.selected) {
+               selected.push(option.value.toLowerCase());
+            }
+         }
+         console.log(document.getElementById('imageType').value)
+         const newImage = {
+            title: document.getElementById('imageTitle').value,
+            description: document.getElementById('imageDescription').value,
+            category: selected,
+            tags: savedtags,
+            imageType: document.getElementById('imageType').value.toLowerCase(),
+            year: document.getElementById('imageYear').value,
+            price: document.getElementById('imagePrice').value
+         }
+         console.log(newImage)
+         api.put(`/admin/images/${modalImageUpdate._id}`, newImage, {
+            headers: {
+               "x-access-token": cookies.get('jwt')
+            },
          })
+            .then(res => {
+               toast.success("Obra atualizada com sucesso!")
+               fetchImages()
+               document.getElementById("closeModalImageUpdate").click()
+            })
+            .catch(err => {
+               if (err) {
+                  toast.error("Erro ao atualizar a obra. Tenta novamente mais tarde.")
+               }
+            })
+      }
+
+   }
+
+   //Formata a data para o value da input
+   function formatDate(date) {
+      var d = new Date(date),
+         month = '' + (d.getMonth() + 1),
+         day = '' + d.getDate(),
+         year = d.getFullYear();
+
+      if (month.length < 2)
+         month = '0' + month;
+      if (day.length < 2)
+         day = '0' + day;
+
+      document.getElementById("imageYear").value = ([year, month, day].join('-'))
    }
 
 
@@ -87,13 +152,14 @@ export default function ImageMan() {
 
    //Atualiza os dados do modal de atualização de imagem e abre o mesmo.
    function updateModalImage(modalImageData) {
+      console.log(modalImageData)
+      formatDate(modalImageData?.year)
       setModalImageUpdate(modalImageData)
       updateTags(modalImageData)
-
       document.getElementById("fakeButtonUpdate").click()
-
    }
 
+   //Apaga tags localmente da obra
    function deleteTag(content, tagName) {
       if (confirm("Ao clicar irá eliminar a tag " + tagName) == true) {
          var finded = null;
@@ -108,16 +174,30 @@ export default function ImageMan() {
       }
    }
 
+   //Adiciona tags localmente da obra
    function addTag() {
+      let finded = false
       let addTag = prompt("Qual é a tag que deseja adicionar?", "");
       if (addTag != null) {
          const newContent = modalImageUpdate
-         newContent?.tags.push(addTag)
-         setModalImageUpdate(newContent)
-         updateTags(newContent)
+
+         for (let i = 0; i < newContent?.tags.length; i++) { 
+            if (newContent?.tags[i].toLowerCase() == addTag.toLowerCase()) {
+               finded = true
+            }
+         }
+         if (finded == false) {
+            newContent?.tags.push(addTag)
+            setModalImageUpdate(newContent)
+            updateTags(newContent)
+         }else {
+            toast.error("Esta tag já existe")
+         }
+
       }
    }
 
+   //Atualiza tags localmente da obra
    function updateTags(content) {
       let buttons = []
       let saveTags = []
@@ -159,7 +239,7 @@ export default function ImageMan() {
                <div className="modal-content">
                   <div className="modal-header">
                      <h5 className="modal-title" id="exampleModalLabel">{modalImageUpdate?.title}</h5>
-                     <button type="button" className="close" data-bs-dismiss="modal" data-tip="Close">
+                     <button type="button" className="close" data-bs-dismiss="modal" id="closeModalImageUpdate" data-tip="Close">
                         <span aria-hidden="true">&times;</span>
                      </button>
                   </div>
@@ -183,13 +263,21 @@ export default function ImageMan() {
                            <input type="text" className="form-control" id="imageTitle" defaultValue={modalImageUpdate?.title} placeholder="Image Title" required />
                         </div>
                         <div className="form-group">
+                           <label className="text-dark">Price</label>
+                           <input type="number" className="form-control" id="imagePrice" defaultValue={modalImageUpdate?.price} placeholder="Price" required />
+                        </div>
+                        <div className="form-group">
+                           <label className="text-dark">Year</label>
+                           <input type="date" className="form-control" id="imageYear" required />
+                        </div>
+                        <div className="form-group">
                            <label className="text-dark">Description</label>
-                           <textarea type="text" className="form-control" id="imageDescription" {...register("description")} defaultValue={modalImageUpdate?.description} placeholder="Image description" required />
+                           <textarea type="text" className="form-control" id="imageDescription" defaultValue={modalImageUpdate?.description} placeholder="Image description" required />
                         </div>
 
                         <div className="form-group">
                            <label className="text-dark">Categorys</label>
-                           <select multiple className="form-control" id="imageCategory" {...register("categorys")} required>
+                           <select multiple className="form-control" id="imageCategory" required>
                               {modalImageUpdate?.category.includes("landscape") ? <option id="categoryLandscape" selected>Landscape</option> : <option id="categoryLandscape" >Landscape</option>}
                               {modalImageUpdate?.category.includes("wallpaper") ? <option id="categoryWallpaper" selected>Wallpaper</option> : <option id="categoryWallpaper" >Wallpaper</option>}
                               {modalImageUpdate?.category.includes("drawing") ? <option id="categoryDrawing" selected>Drawing</option> : <option id="categoryDrawing" >Drawing</option>}
@@ -197,7 +285,7 @@ export default function ImageMan() {
                            </select>
                         </div>
                         <p className="text-dark mb-2">Image Type</p>
-                        <select className="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="imageType" {...register("imageType")} >
+                        <select className="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="imageType" >
                            {modalImageUpdate?.imageType == "real" ? <option id="imageTypeReal" selected>Real</option> : <option id="imageTypeReal">Real</option>}
                            {modalImageUpdate?.imageType == "digital" ? <option id="imageTypeDigital" selected>Digital</option> : <option id="imageTypeDigital">Digital</option>}
                         </select>
@@ -211,7 +299,7 @@ export default function ImageMan() {
                            </div>
                         </div>
 
-                        <button type="submit" className="btn btn-dark float-right mb-4">Atualizar dados</button>
+                        <button type="submit" className="btn btn-dark float-right mb-4">Update data</button>
                      </form>
 
                   </div>
@@ -221,7 +309,7 @@ export default function ImageMan() {
 
          <div className="col-12 d-flex">
             <div className="col-6 px-0 py-3" style={{ placeSelf: "center" }}>
-               <h5 className="text-dark m-0 font-weight-normal">Gestão de Obras</h5>
+               <h5 className="text-dark m-0 font-weight-normal">Art Management</h5>
             </div>
             <div className="col-6 pr-0">
                <div className="btn-toolbar py-3 pr-0 d-block text-right" role="toolbar" aria-label="Toolbar with button groups">
@@ -244,13 +332,13 @@ export default function ImageMan() {
                      <>
                         <thead>
                            <tr>
-                              <th className="font-weight-light">Obra</th>
-                              <th className="font-weight-light">Titulo</th>
-                              <th className="font-weight-light">Categorias</th>
+                              <th className="font-weight-light">Art</th>
+                              <th className="font-weight-light">Title</th>
+                              <th className="font-weight-light">Categorys</th>
                               <th className="font-weight-light">Tags</th>
-                              <th className="font-weight-light">Preço</th>
-                              <th className="font-weight-light">Ano</th>
-                              <th className="font-weight-light">Ações</th>
+                              <th className="font-weight-light">Price</th>
+                              <th className="font-weight-light">Year</th>
+                              <th className="font-weight-light">Actions</th>
                            </tr>
                         </thead>
                         <tbody>

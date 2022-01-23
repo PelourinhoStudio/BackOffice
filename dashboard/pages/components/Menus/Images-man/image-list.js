@@ -6,34 +6,7 @@ import api from '../../../../services/api'
 import { ref, storage, uploadBytesResumable, getDownloadURL } from '../../../../services/firebase'
 import ReactTooltip from 'react-tooltip';
 
-export default function ImageList({ image, updateListFunc, modalPreview, updateModalImage }) {
-
-      const { register, handleSubmit } = useForm()
-
-      function updateModalImages(values) {
-            const storageRef = ref(storage, 'images/' + data.images[0].name)
-            const uploadTask = uploadBytesResumable(storageRef, data.images[0])
-            const updateModalImages = {
-                  title: data.title,
-                  description: data.description,
-                  category: data.category,
-                  tags: data.tags,
-                  price: data.price,
-                  year: data.year,
-                  imageType: data.imageType,
-                  imageCDN: res,
-                  likes: data.likes,
-                  dislikes: data.dislikes
-            }
-            api
-                  .put(`/Images/${image._id}`, updateModalImages)
-
-
-            if (updateListFunc) {
-                  updateListFunc()
-            }
-      }
-
+export default function ImageList({ image, modalPreview, updateModalImage }) {
       return (
             <>
                   <ReactTooltip place="bottom" effect="solid" />
@@ -50,8 +23,16 @@ export default function ImageList({ image, updateListFunc, modalPreview, updateM
 
                         </td>
                         <td>
-                              <div className="text-title " data-tip={image.category}>
-                                    {image.category}
+                              <div className="text-title" data-tip={image.category}>
+                                    {
+                                          image.category.map((category) => {
+                                                return (
+                                                      <>
+                                                            {category + " "}
+                                                      </>
+                                                )
+                                          })
+                                    }
                               </div>
                         </td>
                         <td>
@@ -62,17 +43,19 @@ export default function ImageList({ image, updateListFunc, modalPreview, updateM
                                                       {tags + " "}
                                                 </>
                                           )
-                                    })}
-
+                                    })
+                              }
                         </td>
                         <td>
-                              {image.price}
+                              {image.price + " €"}
                         </td>
                         <td>
-                              {moment(image.year).format('LLL')}
+                              {moment(image.year).format('LL')}
                         </td>
                         <td>
-                              <a href="#" className="settings mr-2" onClick={() => updateModalImage(image)}><i className="fas fa-cog text-danger"></i></a>
+                              <a href="#" className="settings mr-2" onClick={() => {
+                                    updateModalImage(image)
+                              }}><i className="fas fa-cog text-danger"></i></a>
                               <a href="" className="delete" data-bs-toggle="modal" data-bs-target={"#delete_" + image._id}><i className="fas fa-times-circle text-primary"></i></a>
                         </td>
                   </tr>
