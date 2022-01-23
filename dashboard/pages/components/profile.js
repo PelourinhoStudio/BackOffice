@@ -14,7 +14,7 @@ export default function Profile() {
     return(
 <>
 <div className="text-center mt-4">
-    <img src={userInfo.avatar}></img>
+    <img src={userInfo.avatar} style={{width: "125px"}}></img>
 </div>
 <div className="mt-3 row">
     <div className="m-auto bg-white col-7 rounded text-center text-dark py-2 p-1 font-weight-bold">

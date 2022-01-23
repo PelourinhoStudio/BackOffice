@@ -64,7 +64,7 @@ export default function DesignerMan() {
 
             <tbody>
                {
-                  isEmptyObject(users) ? <p>teste</p> :
+                  isEmptyObject(users) ? <div className='p-4'>There are no designers</div> :
 
 
                      users.map((user) => {

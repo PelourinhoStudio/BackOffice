@@ -16,8 +16,10 @@ export default function DesignerList({ user, updateListFunc }) {
          headers: {
             "x-access-token": cookies.get('jwt')
          },
+      }).then(()=>{
+         toast.success("User deleted with success.")
+         window.location.reload();
       });
-      window.location.reload();
    }
 
 
@@ -121,7 +123,6 @@ export default function DesignerList({ user, updateListFunc }) {
                               </div>
                               <div className="row mt-2">
                                  <div className="form-group col-6">
-                                    {console.log(user)}
                                     <label>Statute</label>
                                     <select className="form-control" {...register("userType", { required: true })}>
                                        {String(user.userType).toUpperCase() === 'ADMIN' ? <><option selected className="text-danger">Admin</option></> : <><option className="text-danger">Admin</option></>}

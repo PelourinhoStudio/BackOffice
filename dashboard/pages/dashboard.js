@@ -58,7 +58,7 @@ const Dashboard = () => {
                <div className="w-100 roudend mb-3">
                   <div className="m-auto m-md-0" style={{ width: "317px" }}>
                   <div className="text-center mt-4">
-                      <img src={userInfo.avatar}></img>
+                      <img src={userInfo.avatar } style={{width: "125px", height: "125px"}} className='rounded-circle'></img>
                   </div>
                   <div className="mt-3 row">
                       <div className="m-auto bg-white col-7 rounded text-center text-dark py-2 p-1 font-weight-bold">

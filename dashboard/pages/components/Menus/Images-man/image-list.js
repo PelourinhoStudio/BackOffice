@@ -5,8 +5,13 @@ import React, { useEffect, useState } from "react"
 import api from '../../../../services/api'
 import { ref, storage, uploadBytesResumable, getDownloadURL } from '../../../../services/firebase'
 import ReactTooltip from 'react-tooltip';
+import Cookies from 'universal-cookie';
+import { toast } from 'react-toastify';
 
-export default function ImageList({ image, modalPreview, updateModalImage }) {
+export default function ImageList({ image, modalPreview, updateModalImage, deleteImage }) {
+
+      const cookies = new Cookies();
+
       return (
             <>
                   <ReactTooltip place="bottom" effect="solid" />
@@ -53,10 +58,8 @@ export default function ImageList({ image, modalPreview, updateModalImage }) {
                               {moment(image.year).format('LL')}
                         </td>
                         <td>
-                              <a href="#" className="settings mr-2" onClick={() => {
-                                    updateModalImage(image)
-                              }}><i className="fas fa-cog text-danger"></i></a>
-                              <a href="" className="delete" data-bs-toggle="modal" data-bs-target={"#delete_" + image._id}><i className="fas fa-times-circle text-primary"></i></a>
+                              <a href="#" className="settings mr-2" onClick={() => updateModalImage(image)}><i className="fas fa-cog text-danger"></i></a>
+                              <a href="" className="delete" data-bs-toggle="modal" onClick={() => deleteImage(image._id)}><i className="fas fa-times-circle text-primary"></i></a>
                         </td>
                   </tr>
             </>

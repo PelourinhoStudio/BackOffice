@@ -10,27 +10,16 @@ export default function Navbar() {
          <div className="collapse navbar-collapse mt-2" id="navbarSupportedContent">
             <ul className="navbar-nav ml-auto">
             <li className="nav-item Ativo">
-               <a className="nav-link" href="#">Exposições</a>
+               <a className="nav-link" href="#">Exhibitions</a>
             </li>
             <li className="nav-item Ativo">
-               <a className="nav-link" href="#">Artistas</a>
+               <a className="nav-link" href="#">Artists</a>
             </li>
             <li className="nav-item Ativo">
-               <a className="nav-link" href="#">Contactos</a>
+               <a className="nav-link" href="#">Contacts</a>
             </li>
             <li className="nav-item">
-               <a className="nav-link" href="#">Loja Online</a>
-            </li>
-            <li className="nav-item dropdown">
-               <a className="nav-link dropdown-toggle p-0 ml-2" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-               <img src="avatar-nav.png"></img>
-               </a>
-               <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a className="dropdown-item" href="#">Action</a>
-                  <a className="dropdown-item" href="#">Another action</a>
-                  <div className="dropdown-divider"></div>
-                  <a className="dropdown-item" href="#">Something else here</a>
-               </div>
+               <a className="nav-link" href="#">Online Store</a>
             </li>
             </ul>
          </div>

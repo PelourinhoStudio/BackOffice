@@ -6,7 +6,7 @@ export default function Menu({ handlingPageFunction, selectedComponentPage }) {
    const cookies = new Cookies();
 
    function logout() {
-      cookies.remove('jwt'); 
+      cookies.remove('jwt');
       router.push('/')
       toast.info("You have successfully logged out.")
    }

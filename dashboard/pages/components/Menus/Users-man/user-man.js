@@ -4,6 +4,7 @@ import Cookies from 'universal-cookie'
 import Userslist from "./users-list"
 import "moment/locale/pt"
 import { toast } from 'react-toastify';
+import { isEmptyObject } from "jquery"
 
 export default function Usersman() {
    const [users, setUsers] = useState([])
@@ -57,11 +58,13 @@ export default function Usersman() {
             </thead>
             <tbody>
                {
-                  users.map((user) => {
-                     return (
-                        <Userslist key={user._id} user={user} and updateListFunc={updateList} />
-                     )
-                  })
+
+                  isEmptyObject(users) ? <div className='p-4'>There are no users</div> :
+                     users.map((user) => {
+                        return (
+                           <Userslist key={user._id} user={user} and updateListFunc={updateList} />
+                        )
+                     })
                }
             </tbody>
          </table>

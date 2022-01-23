@@ -50,6 +50,18 @@ export default function ImageMan() {
          });
    }
 
+   function deleteImage(id) {
+      api.delete(`/admin/images/${id}`, {
+            headers: {
+                  "x-access-token": cookies.get('jwt')
+            },
+      }).then(() => {
+            toast.success("Art deleted with success!"
+            )
+            fetchImages()
+      })
+}
+
    //Atualiza as Imagens
    function updateImage() {
       //Se o admin também atualizar a imagem
@@ -180,7 +192,6 @@ export default function ImageMan() {
       let addTag = prompt("Qual é a tag que deseja adicionar?", "");
       if (addTag != null) {
          const newContent = modalImageUpdate
-
          for (let i = 0; i < newContent?.tags.length; i++) { 
             if (newContent?.tags[i].toLowerCase() == addTag.toLowerCase()) {
                finded = true
@@ -238,7 +249,7 @@ export default function ImageMan() {
             <div className="modal-dialog" role="document">
                <div className="modal-content">
                   <div className="modal-header">
-                     <h5 className="modal-title" id="exampleModalLabel">{modalImageUpdate?.title}</h5>
+                     <h5 className="modal-title text-dark" id="exampleModalLabel">{modalImageUpdate?.title}</h5>
                      <button type="button" className="close" data-bs-dismiss="modal" id="closeModalImageUpdate" data-tip="Close">
                         <span aria-hidden="true">&times;</span>
                      </button>
@@ -264,7 +275,7 @@ export default function ImageMan() {
                         </div>
                         <div className="form-group">
                            <label className="text-dark">Price</label>
-                           <input type="number" className="form-control" id="imagePrice" defaultValue={modalImageUpdate?.price} placeholder="Price" required />
+                           <input type="number" className="form-control" id="imagePrice" defaultValue={modalImageUpdate?.price} placeholder="Price" required  min="1" />
                         </div>
                         <div className="form-group">
                            <label className="text-dark">Year</label>
@@ -346,7 +357,7 @@ export default function ImageMan() {
                               images.map((image) => {
                                  return (
                                     <>
-                                       <ImageList key={image._id} image={image} modalPreview={modalPreview} updateModalImage={updateModalImage} />
+                                       <ImageList key={image._id} image={image} modalPreview={modalPreview} updateModalImage={updateModalImage} deleteImage={deleteImage}/>
                                     </>
                                  )
                               })

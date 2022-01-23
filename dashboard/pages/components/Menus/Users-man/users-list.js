@@ -11,9 +11,11 @@ export default function Userslist({ user, updateListFunc }) {
    const cookies = new Cookies();
 
    function deleteUser() {
-      api.delete('admin/users/' + user._id, { headers: { "x-access-token": cookies.get('jwt') } });
-      toast.success("User deleted with success.")
-      window.location.reload();
+      api.delete('admin/users/' + user._id, { headers: { "x-access-token": cookies.get('jwt') } }).then(()=> {
+         toast.success("User deleted with success.")
+         window.location.reload();
+      });
+
    }
 
 
